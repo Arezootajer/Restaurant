@@ -17,10 +17,10 @@
       <h3 class="text-center">Make Your reservation</h3>
       <hr>
       <div class="text-center">
-        <a href="./table.html">
+        <a href="/table">
       <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list"></span> View Tables</button>
       </a>
-        <a href="./index.html">
+        <a href="/">
        <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></button>
        </a>
        </div>
@@ -61,7 +61,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" id="submit">Submit</button>
     </div>
   </div>
 </form>
@@ -73,5 +73,48 @@
         </p>
        </div>
        </div>
+  <script type="text/javascript">
+
+
+  // In this code below we create the Front-end Javascript which "POSTS" our form data to our express server.
+  // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+  // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+  // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+
+  $("#submit").on("click", function(event){
+
+    console.log('Is this working?');
+
+    event.preventDefault();
+
+    // Here we grab the form elements
+    var newReservation = {
+      customerName: $('#name').val().trim(),
+      phoneNumber: $('#number').val().trim(),
+      customerEmail: $('#email').val().trim(),
+      customerID: $('#id').val().trim()
+    };
+
+    console.log(newReservation);
+
+    // This line is the magic. It's very similar to the standard ajax function we used.
+    // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+    // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+    // depending on if a tables is available or not.
+
+    // Here we get the location of the root page.
+    // We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+    //var currentURL = window.location.origin;
+
+    //$.post(currentURL + "/api/tables", newReservation);
+
+    $.post("/api/new", newReservation)
+    .done(function(data) {
+      console.log(data);
+      alert("Adding reservation...");
+    });
+  });
+
+  </script>
 </body>
 </html>

@@ -57,19 +57,19 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Tables array that includes customerName, phoneNumber, customerEmail, customerID.
 var tables = [{
 	routeName: 'table1',
-	name: 'Person 1',
-	phone: "Phone Number",
-	email: "Email",
-	id: "Unique ID",
+	customerName: 'Person 1',
+	phoneNumber: "Phone Number",
+	customerEmail: "Email",
+	customerID: "Unique ID",
 }];
 
 // Waitlist array will include the same information.
-var waitlisted = [{
-	routeName: 'waitlistedtable1',
-	name: 'Person 1',
-	phone: "Phone Number",
-	email: "Email",
-	id: "Unique ID",
+var waitlist = [{
+	routeName: 'waitlisttable1',
+	customerName: 'Person 1',
+	phoneNumber: "Phone Number",
+	customerEmail: "Email",
+	customerID: "Unique ID",
 }];
 
 
@@ -78,15 +78,15 @@ app.get("/", function(req, res){
 	res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/tables", function(req, res){
-	res.sendFile(path.join(__dirname, "view-tables.html"));
+app.get("/table", function(req, res){
+	res.sendFile(path.join(__dirname, "table.html"));
 });
 
-app.get("/reservations", function(req, res){
-	res.sendFile(path.join(__dirname, "reservations.html"));
+app.get("/reserve", function(req, res){
+	res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-// Route to view table array
+// Route to view tables array
 app.get("/api/", function(req, res){
 	res.sendFile(path.join(__dirname, ".html"));
 });
@@ -102,6 +102,31 @@ app.get("/api/:tables?", function(req, res) {
 });
 
 // Search for Specific Character (or all characters) - provides JSON
+app.get("/api/:waitlist?", function(req, res) {
+  return res.json(waitlist);
+});
+
+/* Search for Specific Character (or all characters) - provides JSON
 app.get("/api/:waitlisted?", function(req, res) {
   return res.json(waitlisted);
+});*/
+
+// Create new table - takes in JSON input
+app.post("/api/new", function(req, res) {
+  var table = req.body;
+
+  console.log(table);
+
+  tables.push(table);
+
+  res.json(table);
 });
+
+
+
+
+
+
+
+
+
