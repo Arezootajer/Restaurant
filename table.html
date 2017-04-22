@@ -34,11 +34,14 @@
           </div>
            <div class="panel-heading">
           <h4 class="panel-title"> Waiting List </h4>
+          <div id="waitlistSection"></div>
+          </div>
           </div>
            <div class="panel-heading">
           <h4 class="panel-title">Control Panel </h4>
           </div>
           <p>
+          <a id="clear"href="#">Clear List</a> |
           <a href="/api/waitlist">API Wait List</a> |
           <a href="/api/tables">API Table Link </a>
         </p>
@@ -123,21 +126,21 @@
       });
   }
 
-  // This function resets all of the data in our tables. This is intended to let you restart a demo.
-  function clearTable(){
+   $("#clear").on('click', function(){
+      alert("Clearing...");
 
-    var currentURL = window.location.origin;
-    $.ajax({url: currentURL + "/api/clear", method: "POST"})
+      $.post("/api/tables")
+      .done(function(data) {
+        alert("Clearing...");
+      });
 
-  }
+      $.post("/api/waitlist")
+      .done(function(data) {
+        alert("Clearing...");
+      });
 
-  $("#clear").on('click', function(){
-    alert("Clearing...");
-    clearTable();
-
-    // Refresh the page after data is cleared
-    location.reload();
-  })
+      location.reload();
+  });
 
 
   // Run Queries!
