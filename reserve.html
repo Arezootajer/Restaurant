@@ -13,72 +13,61 @@
 
   <div class="container">
     <div class="jumbotron">
-      <h1>Hot Restaurant</h1>
-      <h3>Make Your reservation</h3>
+      <h1 class="text-center"><span class="glyphicon glyphicon-fire"></span>Hot Restaurant</h1>
+      <h3 class="text-center">Make Your reservation</h3>
       <hr>
+      <div class="text-center">
       <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> View Tables</button>
        <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></button>
+       </div>
     </div>
     <div class="row">
 
       <div class="col-lg-12">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Character Search</strong></h3>
+      <!--Reservation Page-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"> Table Reservation </h4>
           </div>
           <div class="panel-body">
-            <input type="text" id="character-search" class="form-control">
-            <br>
-            <div class="text-right">
-              <button type="submit" class="btn btn-primary btn-md" id="search-btn"><span class="glyphicon glyphicon-search"></span> Search Your Feelings. You know it to be true.</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Character Statistics</strong></h3>
-          </div>
-          <div class="panel-body">
-            <div class="well">
-              <h2 id="name">Yoda</h2>
-              <div id="stats">
-                <h3><strong>Role:</strong> <span id="role">Jedi Master</span></h3>
-                <h3><strong>Age:</strong> <span id="age">900</span></h3>
-                <h3><strong>Force Points:</strong> <span id="force-points">2000</span></h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+             <form class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="name">Name:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="name" placeholder="Enter Name">
     </div>
   </div>
-
-  <script type="text/javascript">
-    // QUESTION: What is this code doing?
-    $("#search-btn").on("click", function() {
-      var searchedCharacter = $("#character-search").val().trim();
-
-      searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
-
-      // QUESTION: What does $.get do? What are the parameters it is expecting?
-      $.get("/api/" + searchedCharacter, function(data) {
-        console.log(data);
-        if (data) {
-          $("#stats").show();
-          $("#name").text(data.name);
-          $("#role").text(data.role);
-          $("#age").text(data.age);
-          $("#force-points").text(data.forcePoints);
-        }
-        else {
-          $("#name").text("The force is not strong with this one. Your character was not found.");
-          $("#stats").hide();
-        }
-      });
-    });
-  </script>
-
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="number">phone Number:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="number" placeholder="Enter phone number">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="email">Email:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="email" placeholder="Enter Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="id">Unique ID:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="id" placeholder="Enter Unique ID">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+          </div>
+          </div>
+      <p>
+          <a href="/api/waitlist">API Wait List</a> |
+          <a href="/api/tables">API Table Link </a>
+        </p>
+       </div>
+       </div>
 </body>
 </html>
