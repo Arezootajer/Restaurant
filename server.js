@@ -86,23 +86,25 @@ app.get("/reserve", function(req, res){
 	res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-// Route to view tables array
-app.get("/api/", function(req, res){
+/* Route to view tables array
+app.get("/api/tables", function(req, res){
 	res.sendFile(path.join(__dirname, ".html"));
-});
+});*/
 
 // Listener
 app.listen(PORT, function(){
 	console.log("App listening on PORT "+ PORT);
 });
 
-// Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:tables?", function(req, res) {
+// tables - provides JSON
+app.get("/api/tables", function(req, res) {
+	console.log("this is fafs hit")
   return res.json(tables);
 });
 
-// Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:waitlist?", function(req, res) {
+// waitlist - provides JSON
+app.get("/api/waitlist", function(req, res) {
+	console.log("this is getting hit")
   return res.json(waitlist);
 });
 
@@ -117,9 +119,26 @@ app.post("/api/new", function(req, res) {
 
   console.log(table);
 
-  tables.push(table);
+  if (tables.length > 2) {
+  	waitlist.push(table);
+  	console.log("This is the waitlist" + waitlist);
+  	res.json("This is the new table." + table);
+  } else {
+  	tables.push(table);
+  	res.json("This is the new table." + table);
+  }
+});
 
-  res.json(table);
+// Create new table - takes in JSON input
+app.post("/api/tables", function(req, res) {
+	tables = [];
+  	res.json("This is new empty table array." + tables);
+});
+
+// Create new table - takes in JSON input
+app.post("/api/waitlist", function(req, res) {
+	waitlist = [];
+  	res.json("This is new empty waitlist array." + tables);
 });
 
 
