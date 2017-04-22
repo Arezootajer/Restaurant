@@ -1,31 +1,16 @@
-// Create a basic server using Express.JS
-// Follow Star Wars Extended.
+// Dependencies
 
-// Node module dependencies: express, bodyParse for JSON, path... any others?
+/* Create New Characters - takes in JSON input
+app.post("/api/new", function(req, res) {
+  var newcharacter = req.body;
+  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
 
-// Set up express app like Star Wars app.
+  console.log(newcharacter);
 
-// Set up body parser.
+  characters.push(newcharacter);
 
-// Create array variables that will hold the data.
-
-// Tables array that includes customerName, phoneNumber, customerEmail, customerID.
-
-// Waitlist array will include the same information.
-
-// Create a set of routes for displaying the HTML pages
-
-// Route to home page /
-
-// Route to make reservation page /reserve
-
-// Route to booked tables page /tables
-
-// Route to view table array
-
-// Route to view waitlist array
-
-// Create a set of routes for getting and posting table data.
+  res.json(newcharacter);
+});
 
 // Route that gets table data and pushes it to tables page.
 
@@ -34,6 +19,8 @@
 // Use jQuery to run AJAX calls to GET and POST data from users to the Express server
 
 // app.get that will retrieve tables has to retrieve the reservations and the waitlist.
+
+
 
 // app.post will need to check first if there's a table available.
 
@@ -51,4 +38,95 @@
 
 // Also need to make sure the form page is an a href that will do the post, similar to star wars.
 
-// Might need to do something from front end to get form stuff to work.
+// Might need to do something from front end to get form stuff to work.*/
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
+
+// Express
+var app = express();
+var PORT = 3000;
+
+// Data Parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+// Tables array that includes customerName, phoneNumber, customerEmail, customerID.
+var tables = [{
+	routeName: 'table1',
+	customerName: 'Person 1',
+	phoneNumber: "Phone Number",
+	customerEmail: "Email",
+	customerID: "Unique ID",
+}];
+
+// Waitlist array will include the same information.
+var waitlist = [{
+	routeName: 'waitlisttable1',
+	customerName: 'Person 1',
+	phoneNumber: "Phone Number",
+	customerEmail: "Email",
+	customerID: "Unique ID",
+}];
+
+
+// Routes
+app.get("/", function(req, res){
+	res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/table", function(req, res){
+	res.sendFile(path.join(__dirname, "table.html"));
+});
+
+app.get("/reserve", function(req, res){
+	res.sendFile(path.join(__dirname, "reserve.html"));
+});
+
+// Route to view tables array
+app.get("/api/", function(req, res){
+	res.sendFile(path.join(__dirname, ".html"));
+});
+
+// Listener
+app.listen(PORT, function(){
+	console.log("App listening on PORT "+ PORT);
+});
+
+// Search for Specific Character (or all characters) - provides JSON
+app.get("/api/:tables?", function(req, res) {
+  return res.json(tables);
+});
+
+// Search for Specific Character (or all characters) - provides JSON
+app.get("/api/:waitlist?", function(req, res) {
+  return res.json(waitlist);
+});
+
+/* Search for Specific Character (or all characters) - provides JSON
+app.get("/api/:waitlisted?", function(req, res) {
+  return res.json(waitlisted);
+});*/
+
+// Create new table - takes in JSON input
+app.post("/api/new", function(req, res) {
+  var table = req.body;
+
+  console.log(table);
+
+  tables.push(table);
+
+  res.json(table);
+});
+
+
+
+
+
+
+
+
+
